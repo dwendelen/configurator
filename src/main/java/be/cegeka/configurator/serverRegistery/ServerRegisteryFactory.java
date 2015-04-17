@@ -11,7 +11,7 @@ public class ServerRegisteryFactory {
     }
 
     public ServerRegistery create() {
-        Server thisServer = serverFactory.createThisServer(0);
+        Server thisServer = serverFactory.createThisServer();
         Multicaster multicaster = new Multicaster(thisServer);
         Repository repository = new Repository(thisServer);
         MulticastServerRegistery multicastServerRegistery = new MulticastServerRegistery(multicaster, repository, serverFactory);

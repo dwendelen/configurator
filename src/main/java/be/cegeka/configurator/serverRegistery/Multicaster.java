@@ -1,6 +1,7 @@
 package be.cegeka.configurator.serverRegistery;
 
 import be.cegeka.configurator.server.Server;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -94,7 +95,13 @@ class Multicaster {
             DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
             multicastSocket.receive(datagramPacket);
 
-            MulticastMessage multicastMessage = objectMapper.readValue(buffer, 0, datagramPacket.getLength(), MulticastMessage.class);
+            MulticastMessage multicastMessage;
+            try {
+                multicastMessage = objectMapper.readValue(buffer, 0, datagramPacket.getLength(), MulticastMessage.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return;
+            }
 
             if(multicasterListener != null) {
                 multicasterListener.messageArrived(multicastMessage);
