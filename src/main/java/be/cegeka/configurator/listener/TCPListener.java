@@ -1,7 +1,7 @@
 package be.cegeka.configurator.listener;
 
-public class TCPListener implements Listener {
-    @Override
+class TCPListener implements Listener {
+
     public int getPort() {
         return 0;
     }

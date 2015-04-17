@@ -15,17 +15,14 @@ class MulticastServerRegistery implements MulticasterListener, ServerRegistery {
         multicaster.setMulticasterListener(this);
     }
 
-    @Override
     public void start() {
         multicaster.start();
     }
 
-    @Override
     public void stop() {
         multicaster.stop();
     }
 
-    @Override
     public void messageArrived(MulticastMessage multicastMessage) {
         if(multicastMessage.getUuid().equals(repository.getThisServer().getUuid())) {
             return;
