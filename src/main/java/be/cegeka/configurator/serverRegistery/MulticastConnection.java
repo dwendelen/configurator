@@ -45,6 +45,11 @@ public class MulticastConnection implements Socket {
         public void close() throws IOException {
             multicastSocket.close();
         }
+
+        @Override
+        public int getPort() {
+            return multicastSocket.getLocalPort();
+        }
     }
 
 

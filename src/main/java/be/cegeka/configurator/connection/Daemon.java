@@ -1,6 +1,7 @@
 package be.cegeka.configurator.connection;
 
 import be.cegeka.configurator.listener.Message;
+import com.google.common.base.Optional;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -18,6 +19,10 @@ public abstract class Daemon<T extends Message> {
         this.objectMapper = objectMapper;
     }
 
+    public void init() throws IOException {
+        runner.init();
+    }
+
     public void start() {
         runner.start();
     }
@@ -28,7 +33,11 @@ public abstract class Daemon<T extends Message> {
 
     protected abstract int getPort();
 
-    protected abstract Class<? extends T> deriveMessageClass(String type);
+    public int getActualPort() {
+        return runner.getActualPort();
+    }
+
+    protected abstract Optional<? extends Class<? extends T>> deriveMessageClass(String type);
 
     protected abstract void messageArrived(T message, InetAddress inetAddress);
 
@@ -38,7 +47,6 @@ public abstract class Daemon<T extends Message> {
         @Override
         public void run() {
             try {
-                listeningContext = socket.listen(getPort());
                 while (true) {
                     if (isInterrupted()) {
                         break;
@@ -50,6 +58,10 @@ public abstract class Daemon<T extends Message> {
             } finally {
                 closeConnection();
             }
+        }
+
+        public void init() throws IOException {
+            listeningContext = socket.listen(getPort());
         }
 
         @Override
@@ -77,8 +89,12 @@ public abstract class Daemon<T extends Message> {
                 return;
             }
 
-            Class<? extends T> messageClass = deriveMessageClass(jsonNode.get("type").asText());
-            T message = objectMapper.readValue(jsonNode, messageClass);
+            Optional<? extends Class<? extends T>> messageClass = deriveMessageClass(jsonNode.get("type").asText());
+            if(!messageClass.isPresent()) {
+                return;
+            }
+
+            T message = objectMapper.readValue(jsonNode, messageClass.get());
             messageArrived(message, session.getAddress());
         }
 
@@ -90,6 +106,13 @@ public abstract class Daemon<T extends Message> {
                     e.printStackTrace();
                 }
             }
+        }
+
+        public int getActualPort() {
+            if(listeningContext == null) {
+                return -1;
+            }
+            return listeningContext.getPort();
         }
     }
 }

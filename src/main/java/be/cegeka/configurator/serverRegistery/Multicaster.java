@@ -2,6 +2,7 @@ package be.cegeka.configurator.serverRegistery;
 
 import be.cegeka.configurator.connection.*;
 import be.cegeka.configurator.server.Server;
+import com.google.common.base.Optional;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ class Multicaster {
     }
 
     public void start() throws IOException {
+        multicasterDaemon.init();
         multicasterDaemon.start();
 
         ServerInfoMessage serverInfoMessage = new ServerInfoMessage(thisServer);
@@ -51,8 +53,8 @@ class Multicaster {
         }
 
         @Override
-        protected Class<? extends ServerInfoMessage> deriveMessageClass(String type) {
-            return ServerInfoMessage.class;
+        protected Optional<? extends Class<? extends ServerInfoMessage>> deriveMessageClass(String type) {
+            return Optional.of(ServerInfoMessage.class);
         }
 
         @Override
