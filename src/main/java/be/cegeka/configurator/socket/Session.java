@@ -7,7 +7,6 @@ import java.net.InetAddress;
 
 public interface Session {
     InetAddress getAddress();
-    int getLocalPort();
     InputStream read() throws IOException;
     OutputStream write() throws IOException;
     void close() throws IOException;

@@ -62,11 +62,6 @@ public class TCPSocket implements Socket {
         }
 
         @Override
-        public int getLocalPort() {
-            return socket.getLocalPort();
-        }
-
-        @Override
         public InputStream read() throws IOException {
             return socket.getInputStream();
         }

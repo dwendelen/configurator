@@ -67,11 +67,6 @@ public class MulticastSocket implements Socket {
         }
 
         @Override
-        public int getLocalPort() {
-            return -1;
-        }
-
-        @Override
         public InputStream read() throws IOException {
             return new ByteArrayInputStream(readBuffer, 0, datagramPacket.getLength());
         }
@@ -99,11 +94,6 @@ public class MulticastSocket implements Socket {
         @Override
         public InetAddress getAddress() {
             return address;
-        }
-
-        @Override
-        public int getLocalPort() {
-            return -1;
         }
 
         @Override
