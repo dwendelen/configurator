@@ -1,45 +1,39 @@
 package be.cegeka.configurator.server.impl;
 
+import be.cegeka.configurator.message.Message;
+import be.cegeka.configurator.message.MessageSender;
 import be.cegeka.configurator.server.Server;
+import be.cegeka.configurator.server.ServerInformation;
 
-import java.net.InetAddress;
-import java.util.UUID;
+import java.io.IOException;
 
 public class SimpleServer implements Server {
-    private String uuid;
-    private int port;
-    private String hostname;
-    private String inetAddress;
+    private MessageSender messageSender;
+    private ServerInformation serverInformation;
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public SimpleServer(MessageSender messageSender, ServerInformation serverInformation) {
+        this.messageSender = messageSender;
+        this.serverInformation = serverInformation;
     }
 
     public String getUuid() {
-        return uuid;
+        return serverInformation.getUuid();
     }
 
     public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
+        return serverInformation.getPort();
     }
 
     public String getHostname() {
-        return hostname;
-    }
-
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
+        return serverInformation.getHostname();
     }
 
     public String getInetAddress() {
-        return inetAddress;
+        return serverInformation.getInetAddress();
     }
 
-    public void setInetAddress(String inetAddress) {
-        this.inetAddress = inetAddress;
+    @Override
+    public void send(Message message) throws IOException {
+        messageSender.send(this.getInetAddress(), this.getPort(), message);
     }
 }

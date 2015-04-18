@@ -1,5 +1,6 @@
 package be.cegeka.configurator.server;
 
+import be.cegeka.configurator.message.MessageSender;
 import be.cegeka.configurator.server.impl.SimpleServer;
 
 import java.net.InetAddress;
@@ -7,6 +8,12 @@ import java.net.UnknownHostException;
 import java.util.UUID;
 
 public class ServerFactory {
+    private MessageSender messageSender;
+
+    public ServerFactory(MessageSender messageSender) {
+        this.messageSender = messageSender;
+    }
+
     public Server createThisServer(int port) {
         ServerInformation serverInformation = new ServerInformation();
         serverInformation.setPort(port);
@@ -25,11 +32,7 @@ public class ServerFactory {
     }
 
     public Server createNewServer(ServerInformation serverInformation) {
-        SimpleServer server = new SimpleServer();
-        server.setUuid(serverInformation.getUuid());
-        server.setPort(serverInformation.getPort());
-        server.setHostname(serverInformation.getHostname());
-        server.setInetAddress(serverInformation.getInetAddress());
+        SimpleServer server = new SimpleServer(messageSender, serverInformation);
         return server;
     }
 }
