@@ -42,6 +42,10 @@ class ServerInfoMessage implements Message {
         return MESSAGE_TYPE;
     }
 
+    public void setMessageType(String messageType) {
+
+    }
+
     public int getPort() {
         return port;
     }
