@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
 import java.net.InetAddress;
 
-class JoinProtocol {
+public class JoinProtocol {
     public static final int PORT = 6548;
     public static final String MULTICAST = "ff05::dace";
 

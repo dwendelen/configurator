@@ -5,7 +5,7 @@ import com.google.common.base.Optional;
 
 import java.util.*;
 
-class Repository {
+public class Repository {
     private Server thisServer;
     private Map<UUID, Server> otherServersMap = new HashMap<UUID, Server>();
     private List<Server> otherServersList = new LinkedList<Server>();

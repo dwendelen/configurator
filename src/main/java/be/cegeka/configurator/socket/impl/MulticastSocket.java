@@ -8,7 +8,7 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
-class MulticastSocket implements Socket {
+public class MulticastSocket implements Socket {
     private InetAddress multiCastAddress;
 
     public MulticastSocket(InetAddress multiCastAddress) {

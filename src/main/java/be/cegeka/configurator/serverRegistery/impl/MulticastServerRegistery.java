@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-class MulticastServerRegistery implements JoinProtocolListener, ServerRegistery {
+public class MulticastServerRegistery implements JoinProtocolListener, ServerRegistery {
     private JoinProtocol joinProtocol;
     private Repository repository;
     private ServerFactory serverFactory;
@@ -34,11 +34,9 @@ class MulticastServerRegistery implements JoinProtocolListener, ServerRegistery 
         joinProtocol.stop();
     }
 
-    @Override
     public List<? extends MessageHandler> getMessageHandlers() {
         return newArrayList(serverInfoHandler);
     }
-
 
     @Override
     public void newSereverArrived(InetAddress inetAddress, ServerInfoMessage serverInfoMessage) {

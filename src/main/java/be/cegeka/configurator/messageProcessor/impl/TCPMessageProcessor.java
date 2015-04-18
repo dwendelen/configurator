@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.net.InetAddress;
 
-class TCPMessageProcessor implements MessageProcessor {
+public class TCPMessageProcessor implements MessageProcessor {
     private MessageHandlerRepo messageHandlerRepo;
     private ListenerDaemon listenerDaemon;
 

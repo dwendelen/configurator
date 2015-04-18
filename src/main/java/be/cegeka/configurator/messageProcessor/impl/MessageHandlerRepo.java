@@ -7,7 +7,7 @@ import com.google.common.base.Optional;
 import java.util.HashMap;
 import java.util.Map;
 
-class MessageHandlerRepo {
+public class MessageHandlerRepo {
     Map<String, MessageHandler> messageHandlerMap = new HashMap<String, MessageHandler>();
 
     public <T extends Message> Optional<MessageHandler<T>> get(String messageType) {

@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
-class TCPSocket implements Socket {
+public class TCPSocket implements Socket {
     @Override
     public ListeningContext listen(int port) throws IOException {
         return new TCPListeningContext(port);
