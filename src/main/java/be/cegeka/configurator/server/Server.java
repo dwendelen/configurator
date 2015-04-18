@@ -1,11 +1,13 @@
 package be.cegeka.configurator.server;
 
+import java.net.InetAddress;
 import java.util.UUID;
 
 public class Server {
     private UUID uuid;
     private int port;
     private String hostname;
+    private InetAddress inetAddress;
 
     protected void setUuid(UUID uuid) {
         this.uuid = uuid;
@@ -29,5 +31,13 @@ public class Server {
 
     protected void setHostname(String hostname) {
         this.hostname = hostname;
+    }
+
+    public InetAddress getInetAddress() {
+        return inetAddress;
+    }
+
+    protected void setInetAddress(InetAddress inetAddress) {
+        this.inetAddress = inetAddress;
     }
 }

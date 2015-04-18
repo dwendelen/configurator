@@ -44,6 +44,9 @@ class Multicaster {
                 init();
                 sendHello();
                 while (true) {
+                    if (isInterrupted()) {
+                        break;
+                    }
                     listen();
                 }
             } catch (Exception e) {
@@ -61,26 +64,22 @@ class Multicaster {
         }
 
         private void closeConnection() {
-            if(multicastSocket != null) {
-                if(!multicastSocket.isClosed()) {
+            if (multicastSocket != null) {
+                if (!multicastSocket.isClosed()) {
                     multicastSocket.close();
                 }
             }
         }
 
-        private void init() throws IOException{
+        private void init() throws IOException {
             multiCastAddress = InetAddress.getByName("ff05::dace");
             multicastSocket = new MulticastSocket(PORT);
             multicastSocket.joinGroup(multiCastAddress);
         }
 
-        private void sendHello() throws IOException{
-            MulticastMessage multicastMessage = new MulticastMessage();
-            multicastMessage.setUuid(thisServer.getUuid());
-            multicastMessage.setAddress("127.0.0.1");
-            multicastMessage.setHostname(thisServer.getHostname());
-
-            sendObject(multicastMessage);
+        private void sendHello() throws IOException {
+            ServerInfoMessage serverInfoMessage = new ServerInfoMessage(thisServer);
+            sendObject(serverInfoMessage);
         }
 
         private void sendObject(Object object) throws IOException {
@@ -91,20 +90,20 @@ class Multicaster {
         }
 
         private void listen() throws IOException {
-            byte[] buffer = new byte[16*1024];
+            byte[] buffer = new byte[1024];
             DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
             multicastSocket.receive(datagramPacket);
 
-            MulticastMessage multicastMessage;
+            ServerInfoMessage serverInfoMessage;
             try {
-                multicastMessage = objectMapper.readValue(buffer, 0, datagramPacket.getLength(), MulticastMessage.class);
+                serverInfoMessage = objectMapper.readValue(buffer, 0, datagramPacket.getLength(), ServerInfoMessage.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 return;
             }
 
-            if(multicasterListener != null) {
-                multicasterListener.messageArrived(multicastMessage);
+            if (multicasterListener != null) {
+                multicasterListener.messageArrived(datagramPacket.getAddress(), serverInfoMessage);
             }
         }
     }
