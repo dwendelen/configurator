@@ -25,7 +25,7 @@ class MulticastServerRegistery implements MulticasterListener, ServerRegistery {
         multicaster.setMulticasterListener(this);
     }
 
-    public void start() {
+    public void start() throws IOException {
         multicaster.start();
     }
 

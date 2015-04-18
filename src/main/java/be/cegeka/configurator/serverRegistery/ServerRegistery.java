@@ -2,10 +2,11 @@ package be.cegeka.configurator.serverRegistery;
 
 import be.cegeka.configurator.listener.MessageHandler;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ServerRegistery {
-    void start();
+    void start() throws IOException;
     void stop();
     List<? extends MessageHandler> getMessageHandlers();
 }

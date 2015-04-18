@@ -3,6 +3,8 @@ package be.cegeka.configurator.serverRegistery;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerFactory;
 
+import java.io.IOException;
+
 public class ServerRegisteryFactory {
     private ServerFactory serverFactory;
 
@@ -10,7 +12,7 @@ public class ServerRegisteryFactory {
         this.serverFactory = serverFactory;
     }
 
-    public ServerRegistery create() {
+    public ServerRegistery create() throws IOException {
         Server thisServer = serverFactory.createThisServer();
         Multicaster multicaster = new Multicaster(thisServer);
         Repository repository = new Repository(thisServer);
