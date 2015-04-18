@@ -17,7 +17,7 @@ public class TCPSocket implements Socket {
     }
 
     @Override
-    public Session open(InetAddress inetAddress, int port) throws IOException {
+    public Session open(String inetAddress, int port) throws IOException {
         return new TCPSession(inetAddress, port);
     }
 
@@ -52,13 +52,13 @@ public class TCPSocket implements Socket {
             this.socket = socket;
         }
 
-        public TCPSession(InetAddress server, int port) throws IOException {
+        public TCPSession(String server, int port) throws IOException {
             socket = new java.net.Socket(server, port);
         }
 
         @Override
-        public InetAddress getAddress() {
-            return socket.getInetAddress();
+        public String getAddress() {
+            return socket.getInetAddress().getHostAddress();
         }
 
         @Override

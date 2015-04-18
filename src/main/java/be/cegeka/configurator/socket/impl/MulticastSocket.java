@@ -21,7 +21,7 @@ public class MulticastSocket implements Socket {
     }
 
     @Override
-    public Session open(InetAddress inetAddress, int port) throws IOException {
+    public Session open(String inetAddress, int port) throws IOException {
         return new Write(inetAddress, port);
     }
 
@@ -62,8 +62,8 @@ public class MulticastSocket implements Socket {
         }
 
         @Override
-        public InetAddress getAddress() {
-            return datagramPacket.getAddress();
+        public String getAddress() {
+            return datagramPacket.getAddress().getHostAddress();
         }
 
         @Override
@@ -82,17 +82,17 @@ public class MulticastSocket implements Socket {
     }
 
     private class Write implements Session {
-        private InetAddress address;
+        private String address;
         private int port;
         private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(1024);
 
-        public Write(InetAddress address, int port) {
+        public Write(String address, int port) {
             this.address = address;
             this.port = port;
         }
 
         @Override
-        public InetAddress getAddress() {
+        public String getAddress() {
             return address;
         }
 

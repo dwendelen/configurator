@@ -58,7 +58,7 @@ public class TCPMessageProcessor implements MessageProcessor {
         }
 
         @Override
-        protected void messageArrived(Message message, InetAddress inetAddress) {
+        protected void messageArrived(Message message, String inetAddress) {
             Optional<MessageHandler<Message>> messageHandlerOptional = messageHandlerRepo.get(message.getType());
             if(!messageHandlerOptional.isPresent()) {
                 return;

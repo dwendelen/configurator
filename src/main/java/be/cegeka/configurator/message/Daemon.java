@@ -36,7 +36,7 @@ public abstract class Daemon<T extends Message> {
 
     protected abstract Optional<? extends Class<? extends T>> deriveMessageClass(String type);
 
-    protected abstract void messageArrived(T message, InetAddress inetAddress);
+    protected abstract void messageArrived(T message, String inetAddress);
 
     private class Runner extends Thread {
         private ListeningContext listeningContext;

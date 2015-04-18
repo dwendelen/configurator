@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 
 public interface Session {
-    InetAddress getAddress();
+    String getAddress();
     InputStream read() throws IOException;
     OutputStream write() throws IOException;
     void close() throws IOException;

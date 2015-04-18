@@ -1,31 +1,35 @@
 package be.cegeka.configurator.server;
 
+import be.cegeka.configurator.server.impl.SimpleServer;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
 
 public class ServerFactory {
     public Server createThisServer(int port) {
-        UUID uuid = UUID.randomUUID();
-        String hostname;
-        InetAddress localHost;
+        ServerInformation serverInformation = new ServerInformation();
+        serverInformation.setPort(port);
+        serverInformation.setUuid(UUID.randomUUID().toString());
+
         try {
-            localHost = InetAddress.getLocalHost();
-            hostname = localHost.getHostName();
+            InetAddress localhost = InetAddress.getLocalHost();
+            serverInformation.setInetAddress(localhost.getHostAddress().toString());
+            serverInformation.setHostname(localhost.getHostName());
         } catch (UnknownHostException e) {
-            hostname = "unkown";
-            localHost = InetAddress.getLoopbackAddress();
+            serverInformation.setInetAddress("unknown");
+            serverInformation.setHostname("unknown");
         }
 
-        return createNewServer(uuid, localHost, port, hostname);
+        return createNewServer(serverInformation);
     }
 
-    public Server createNewServer(UUID uuid, InetAddress address, int port, String hostname) {
-        Server server = new Server();
-        server.setUuid(uuid);
-        server.setPort(port);
-        server.setHostname(hostname);
-        server.setInetAddress(address);
+    public Server createNewServer(ServerInformation serverInformation) {
+        SimpleServer server = new SimpleServer();
+        server.setUuid(serverInformation.getUuid());
+        server.setPort(serverInformation.getPort());
+        server.setHostname(serverInformation.getHostname());
+        server.setInetAddress(serverInformation.getInetAddress());
         return server;
     }
 }

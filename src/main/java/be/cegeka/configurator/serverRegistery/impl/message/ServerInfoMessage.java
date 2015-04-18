@@ -1,14 +1,14 @@
-package be.cegeka.configurator.serverRegistery.impl;
+package be.cegeka.configurator.serverRegistery.impl.message;
 
 import be.cegeka.configurator.message.Message;
 import be.cegeka.configurator.server.Server;
 
 import java.util.UUID;
 
-class ServerInfoMessage implements Message {
+public class ServerInfoMessage implements Message {
     public static final String MESSAGE_TYPE = "serverInfo";
 
-    private UUID uuid;
+    private String uuid;
     private String hostname;
     private int port;
 
@@ -16,11 +16,11 @@ class ServerInfoMessage implements Message {
 
     public ServerInfoMessage(Server server) {
         setPort(server.getPort());
-        setUuid(server.getUuid());
+        setUuid(server.getUuid().toString());
         setHostname(server.getHostname());
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
@@ -29,7 +29,7 @@ class ServerInfoMessage implements Message {
     }
 
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

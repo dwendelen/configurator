@@ -16,7 +16,7 @@ public class MessageSender {
         this.objectMapper = objectMapper;
     }
 
-    public void send(InetAddress server, int port, Message message) throws IOException {
+    public void send(String server, int port, Message message) throws IOException {
         Session session = socket.open(server, port);
         objectMapper.writeValue(session.write(), message);
         session.close();

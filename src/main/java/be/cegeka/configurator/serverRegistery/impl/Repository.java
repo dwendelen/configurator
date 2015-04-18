@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Repository {
     private Server thisServer;
-    private Map<UUID, Server> otherServersMap = new HashMap<UUID, Server>();
+    private Map<String, Server> otherServersMap = new HashMap<String, Server>();
     private List<Server> otherServersList = new LinkedList<Server>();
 
     public Repository(Server thisServer) {
