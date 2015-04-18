@@ -1,5 +1,7 @@
 package be.cegeka.configurator.serverRegistery;
 
+import java.net.InetAddress;
+
 interface MulticasterListener {
-    void messageArrived(MulticastMessage multicastMessage);
+    void messageArrived(InetAddress inetAddress, ServerInfoMessage serverInfoMessage);
 }

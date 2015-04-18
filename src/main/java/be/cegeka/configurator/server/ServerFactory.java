@@ -14,19 +14,24 @@ public class ServerFactory {
     public Server createThisServer() {
         UUID uuid = UUID.randomUUID();
         String hostname;
+        InetAddress localHost;
         try {
-            hostname = InetAddress.getLocalHost().getHostName();
+            localHost = InetAddress.getLocalHost();
+            hostname = localHost.getHostName();
         } catch (UnknownHostException e) {
             hostname = "unkown";
+            localHost = InetAddress.getLoopbackAddress();
         }
-        return createNewServer(uuid, this.port, hostname);
+
+        return createNewServer(uuid, localHost, this.port, hostname);
     }
 
-    public Server createNewServer(UUID uuid, int port, String hostname) {
+    public Server createNewServer(UUID uuid, InetAddress address, int port, String hostname) {
         Server server = new Server();
         server.setUuid(uuid);
         server.setPort(port);
         server.setHostname(hostname);
+        server.setInetAddress(address);
         return server;
     }
 }

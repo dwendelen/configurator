@@ -2,6 +2,6 @@ package be.cegeka.configurator.listener;
 
 public class ListenerFactory {
     public Listener create() {
-        return new TCPListener();
+        return new TCPListener(new MessageHandlerRepo());
     }
 }
