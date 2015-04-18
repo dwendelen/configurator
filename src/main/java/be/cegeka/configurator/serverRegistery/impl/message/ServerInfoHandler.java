@@ -37,10 +37,5 @@ public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
 
             Server newServer = serverFactory.createNewServer(serverInformation);
             repository.addServer(newServer);
-
-            /*System.out.println(newServer.getUuid().toString());
-            System.out.println(newServer.getHostname());
-            System.out.println(newServer.getInetAddress().toString());
-            System.out.println(newServer.getPort());*/
         }
 }

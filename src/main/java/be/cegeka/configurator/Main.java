@@ -12,8 +12,8 @@ import java.util.List;
 public class Main {
     public static void main(String [] args) throws Exception
     {
-        MessageProcessorFactory messageProcessorFactory = new MessageProcessorFactory();
         ServerFactory serverFactory = new ServerFactory();
+        MessageProcessorFactory messageProcessorFactory = new MessageProcessorFactory();
         ServerRegisteryFactory serverRegisteryFactory = new ServerRegisteryFactory(serverFactory);
 
         MessageProcessor messageProcessor = messageProcessorFactory.create();
