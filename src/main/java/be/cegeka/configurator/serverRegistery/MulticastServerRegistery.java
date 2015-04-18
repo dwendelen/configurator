@@ -83,7 +83,7 @@ class MulticastServerRegistery implements MulticasterListener, ServerRegistery {
                 return;
             }
 
-            Server newServer = serverFactory.createNewServer(message.getUuid(), inetAddress, 0, message.getHostname());
+            Server newServer = serverFactory.createNewServer(message.getUuid(), inetAddress, message.getPort(), message.getHostname());
             repository.addServer(newServer);
 
             System.out.println(newServer.getUuid().toString());
