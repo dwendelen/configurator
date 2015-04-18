@@ -16,7 +16,7 @@ public class ServerRegisteryFactory {
     }
 
     public ServerRegistery create(MessageProcessor messageProcessor) throws IOException {
-        Server thisServer = serverFactory.createThisServer(messageProcessor.getPort());
+        Server thisServer = serverFactory.createThisServer(messageProcessor.getPort().get());
 
         JoinProtocol joinProtocol = new JoinProtocol(thisServer);
         Repository repository = new Repository(thisServer);

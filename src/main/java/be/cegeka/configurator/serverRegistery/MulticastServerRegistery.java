@@ -41,7 +41,6 @@ class MulticastServerRegistery implements JoinProtocolListener, ServerRegistery 
 
     @Override
     public void newSereverArrived(InetAddress inetAddress, ServerInfoMessage serverInfoMessage) {
-        System.out.println("MULTICAST");
         serverInfoHandler.handle(serverInfoMessage, inetAddress);
 
         Socket socket = null;
@@ -86,10 +85,10 @@ class MulticastServerRegistery implements JoinProtocolListener, ServerRegistery 
             Server newServer = serverFactory.createNewServer(message.getUuid(), inetAddress, message.getPort(), message.getHostname());
             repository.addServer(newServer);
 
-            System.out.println(newServer.getUuid().toString());
+            /*System.out.println(newServer.getUuid().toString());
             System.out.println(newServer.getHostname());
             System.out.println(newServer.getInetAddress().toString());
-            System.out.println(newServer.getPort());
+            System.out.println(newServer.getPort());*/
         }
     };
 }

@@ -25,7 +25,7 @@ class TCPMessageProcessor implements MessageProcessor {
     }
 
     @Override
-    public int getPort() {
+    public Optional<Integer> getPort() {
         return listenerDaemon.getPort();
     }
 

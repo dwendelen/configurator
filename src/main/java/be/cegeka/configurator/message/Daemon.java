@@ -30,7 +30,7 @@ public abstract class Daemon<T extends Message> {
         runner.interrupt();
     }
 
-    public int getPort() {
+    public Optional<Integer> getPort() {
         return runner.getPort();
     }
 
@@ -41,10 +41,19 @@ public abstract class Daemon<T extends Message> {
     private class Runner extends Thread {
         private ListeningContext listeningContext;
 
+        public void start() {
+            try {
+                listeningContext = socket.listen(port);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            super.start();
+        }
+
         @Override
         public void run() {
             try {
-                listeningContext = socket.listen(port);
                 while (true) {
                     if (isInterrupted()) {
                         break;
@@ -102,11 +111,11 @@ public abstract class Daemon<T extends Message> {
             }
         }
 
-        public int getPort() {
+        public Optional<Integer> getPort() {
             if(listeningContext == null) {
-                return -1;
+                return Optional.absent();
             }
-            return listeningContext.getPort();
+            return Optional.of(listeningContext.getPort());
         }
     }
 }
