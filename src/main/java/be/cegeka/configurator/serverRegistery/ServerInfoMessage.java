@@ -12,6 +12,8 @@ class ServerInfoMessage implements Message {
     private String hostname;
     private int port;
 
+    public ServerInfoMessage() {}
+
     public ServerInfoMessage(Server server) {
         setPort(server.getPort());
         setUuid(server.getUuid());
