@@ -21,6 +21,10 @@ public class TCPListener implements Listener {
         this.messageHandlerRepo = messageHandlerRepo;
     }
 
+    public void init() throws IOException {
+        serverSocket = new ServerSocket(0);
+    }
+
     public void start() {
         runner.start();
     }
@@ -49,7 +53,6 @@ public class TCPListener implements Listener {
         @Override
         public void run() {
             try {
-                init();
                 while (true) {
                     if (isInterrupted()) {
                         break;
@@ -67,10 +70,6 @@ public class TCPListener implements Listener {
         public void interrupt() {
             closeConnection();
             super.interrupt();
-        }
-
-        private void init() throws IOException {
-            serverSocket = new ServerSocket(0);
         }
 
         private <T extends Message> void listen() throws IOException {
