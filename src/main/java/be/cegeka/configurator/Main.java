@@ -7,6 +7,7 @@ import be.cegeka.configurator.server.ServerFactory;
 import be.cegeka.configurator.serverRegistery.ServerRegistery;
 import be.cegeka.configurator.serverRegistery.ServerRegisteryFactory;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Main {
@@ -14,6 +15,12 @@ public class Main {
     {
         ListenerFactory listenerFactory = new ListenerFactory();
         Listener listener = listenerFactory.create();
+        try {
+            listener.init();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
 
         ServerFactory serverFactory = new ServerFactory(listener.getPort());
 
