@@ -41,6 +41,7 @@ class MulticastServerRegistery implements MulticasterListener, ServerRegistery {
 
     @Override
     public void messageArrived(InetAddress inetAddress, ServerInfoMessage serverInfoMessage) {
+        System.out.println("MULTICAST");
         serverInfoHandler.handle(serverInfoMessage, inetAddress);
 
         Socket socket = null;

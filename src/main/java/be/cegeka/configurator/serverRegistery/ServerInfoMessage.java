@@ -38,11 +38,11 @@ class ServerInfoMessage implements Message {
     }
 
     @Override
-    public String getMessageType() {
+    public String getType() {
         return MESSAGE_TYPE;
     }
 
-    public void setMessageType(String messageType) {
+    public void setType(String messageType) {
 
     }
 
