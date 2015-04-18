@@ -4,6 +4,9 @@ import be.cegeka.configurator.messageProcessor.MessageHandler;
 import be.cegeka.configurator.messageProcessor.MessageProcessor;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerFactory;
+import be.cegeka.configurator.serverRegistery.impl.JoinProtocol;
+import be.cegeka.configurator.serverRegistery.impl.MulticastServerRegistery;
+import be.cegeka.configurator.serverRegistery.impl.Repository;
 
 import java.io.IOException;
 import java.util.List;

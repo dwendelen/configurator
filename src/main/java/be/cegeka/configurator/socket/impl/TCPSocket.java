@@ -1,4 +1,4 @@
-package be.cegeka.configurator.socket;
+package be.cegeka.configurator.socket.impl;
 
 import be.cegeka.configurator.socket.ListeningContext;
 import be.cegeka.configurator.socket.Session;

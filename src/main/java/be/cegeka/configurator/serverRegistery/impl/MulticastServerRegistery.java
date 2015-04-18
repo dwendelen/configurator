@@ -1,8 +1,9 @@
-package be.cegeka.configurator.serverRegistery;
+package be.cegeka.configurator.serverRegistery.impl;
 
 import be.cegeka.configurator.messageProcessor.MessageHandler;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerFactory;
+import be.cegeka.configurator.serverRegistery.ServerRegistery;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;

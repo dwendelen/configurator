@@ -1,5 +1,8 @@
 package be.cegeka.configurator.socket;
 
+import be.cegeka.configurator.socket.impl.MulticastSocket;
+import be.cegeka.configurator.socket.impl.TCPSocket;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

@@ -1,7 +1,9 @@
-package be.cegeka.configurator.messageProcessor;
+package be.cegeka.configurator.messageProcessor.impl;
 
 import be.cegeka.configurator.message.Daemon;
 import be.cegeka.configurator.message.Message;
+import be.cegeka.configurator.messageProcessor.MessageHandler;
+import be.cegeka.configurator.messageProcessor.MessageProcessor;
 import be.cegeka.configurator.socket.Socket;
 import be.cegeka.configurator.socket.SocketFactory;
 import com.google.common.base.Optional;

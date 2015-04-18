@@ -1,4 +1,4 @@
-package be.cegeka.configurator.serverRegistery;
+package be.cegeka.configurator.serverRegistery.impl;
 
 import java.net.InetAddress;
 

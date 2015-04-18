@@ -1,6 +1,7 @@
-package be.cegeka.configurator.messageProcessor;
+package be.cegeka.configurator.messageProcessor.impl;
 
 import be.cegeka.configurator.message.Message;
+import be.cegeka.configurator.messageProcessor.MessageHandler;
 import com.google.common.base.Optional;
 
 import java.util.HashMap;

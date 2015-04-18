@@ -1,4 +1,4 @@
-package be.cegeka.configurator.serverRegistery;
+package be.cegeka.configurator.serverRegistery.impl;
 
 import be.cegeka.configurator.socket.*;
 import be.cegeka.configurator.message.Daemon;
