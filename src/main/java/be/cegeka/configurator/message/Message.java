@@ -1,4 +1,4 @@
-package be.cegeka.configurator.listener;
+package be.cegeka.configurator.message;
 
 public interface Message {
     public String getType();

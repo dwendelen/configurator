@@ -1,11 +1,9 @@
-package be.cegeka.configurator.listener;
+package be.cegeka.configurator.messageProcessor;
 
 import java.io.IOException;
 
-public interface Listener {
+public interface MessageProcessor {
     void start();
     int getPort();
     void addMessageHandler(MessageHandler messageHandler);
-
-    void init() throws IOException;
 }

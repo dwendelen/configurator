@@ -1,9 +1,10 @@
-package be.cegeka.configurator.connection;
+package be.cegeka.configurator.message;
 
-import be.cegeka.configurator.listener.Message;
+import be.cegeka.configurator.socket.ListeningContext;
+import be.cegeka.configurator.socket.Session;
+import be.cegeka.configurator.socket.Socket;
 import com.google.common.base.Optional;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -13,14 +14,12 @@ public abstract class Daemon<T extends Message> {
     private Runner runner = new Runner();
     private Socket socket;
     private ObjectMapper objectMapper;
+    private int port;
 
-    protected Daemon(Socket socket, ObjectMapper objectMapper) {
+    protected Daemon(Socket socket, ObjectMapper objectMapper, int port) {
         this.socket = socket;
         this.objectMapper = objectMapper;
-    }
-
-    public void init() throws IOException {
-        runner.init();
+        this.port = port;
     }
 
     public void start() {
@@ -31,10 +30,8 @@ public abstract class Daemon<T extends Message> {
         runner.interrupt();
     }
 
-    protected abstract int getPort();
-
-    public int getActualPort() {
-        return runner.getActualPort();
+    public int getPort() {
+        return runner.getPort();
     }
 
     protected abstract Optional<? extends Class<? extends T>> deriveMessageClass(String type);
@@ -47,6 +44,7 @@ public abstract class Daemon<T extends Message> {
         @Override
         public void run() {
             try {
+                listeningContext = socket.listen(port);
                 while (true) {
                     if (isInterrupted()) {
                         break;
@@ -58,10 +56,6 @@ public abstract class Daemon<T extends Message> {
             } finally {
                 closeConnection();
             }
-        }
-
-        public void init() throws IOException {
-            listeningContext = socket.listen(getPort());
         }
 
         @Override
@@ -108,7 +102,7 @@ public abstract class Daemon<T extends Message> {
             }
         }
 
-        public int getActualPort() {
+        public int getPort() {
             if(listeningContext == null) {
                 return -1;
             }

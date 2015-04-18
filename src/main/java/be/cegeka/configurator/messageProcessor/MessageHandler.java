@@ -1,4 +1,6 @@
-package be.cegeka.configurator.listener;
+package be.cegeka.configurator.messageProcessor;
+
+import be.cegeka.configurator.message.Message;
 
 import java.net.InetAddress;
 

@@ -1,11 +1,12 @@
-package be.cegeka.configurator.listener;
+package be.cegeka.configurator.messageProcessor;
 
+import be.cegeka.configurator.message.Message;
 import com.google.common.base.Optional;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageHandlerRepo {
+class MessageHandlerRepo {
     Map<String, MessageHandler> messageHandlerMap = new HashMap<String, MessageHandler>();
 
     public <T extends Message> Optional<MessageHandler<T>> get(String messageType) {

@@ -1,6 +1,6 @@
 package be.cegeka.configurator.serverRegistery;
 
-import be.cegeka.configurator.listener.MessageHandler;
+import be.cegeka.configurator.messageProcessor.MessageHandler;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerFactory;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -12,25 +12,25 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-class MulticastServerRegistery implements MulticasterListener, ServerRegistery {
-    private Multicaster multicaster;
+class MulticastServerRegistery implements JoinProtocolListener, ServerRegistery {
+    private JoinProtocol joinProtocol;
     private Repository repository;
     private ServerFactory serverFactory;
     private ServerInfoHandler serverInfoHandler = new ServerInfoHandler();
 
-    public MulticastServerRegistery(Multicaster multicaster, Repository repository, ServerFactory serverFactory) {
-        this.multicaster = multicaster;
+    public MulticastServerRegistery(JoinProtocol joinProtocol, Repository repository, ServerFactory serverFactory) {
+        this.joinProtocol = joinProtocol;
         this.repository = repository;
         this.serverFactory = serverFactory;
-        multicaster.setMulticasterListener(this);
+        joinProtocol.setJoinProtocolListener(this);
     }
 
     public void start() throws IOException {
-        multicaster.start();
+        joinProtocol.start();
     }
 
     public void stop() {
-        multicaster.stop();
+        joinProtocol.stop();
     }
 
     @Override
@@ -40,7 +40,7 @@ class MulticastServerRegistery implements MulticasterListener, ServerRegistery {
 
 
     @Override
-    public void messageArrived(InetAddress inetAddress, ServerInfoMessage serverInfoMessage) {
+    public void newSereverArrived(InetAddress inetAddress, ServerInfoMessage serverInfoMessage) {
         System.out.println("MULTICAST");
         serverInfoHandler.handle(serverInfoMessage, inetAddress);
 

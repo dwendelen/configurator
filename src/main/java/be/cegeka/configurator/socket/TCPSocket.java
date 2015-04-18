@@ -1,8 +1,8 @@
-package be.cegeka.configurator.listener;
+package be.cegeka.configurator.socket;
 
-import be.cegeka.configurator.connection.ListeningContext;
-import be.cegeka.configurator.connection.Session;
-import be.cegeka.configurator.connection.Socket;
+import be.cegeka.configurator.socket.ListeningContext;
+import be.cegeka.configurator.socket.Session;
+import be.cegeka.configurator.socket.Socket;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
-public class TCPSocket implements Socket {
+class TCPSocket implements Socket {
     @Override
     public ListeningContext listen(int port) throws IOException {
         return new TCPListeningContext(port);

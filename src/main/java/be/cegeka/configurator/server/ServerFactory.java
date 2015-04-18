@@ -5,13 +5,7 @@ import java.net.UnknownHostException;
 import java.util.UUID;
 
 public class ServerFactory {
-    private int port;
-
-    public ServerFactory(int port) {
-        this.port = port;
-    }
-
-    public Server createThisServer() {
+    public Server createThisServer(int port) {
         UUID uuid = UUID.randomUUID();
         String hostname;
         InetAddress localHost;
@@ -23,7 +17,7 @@ public class ServerFactory {
             localHost = InetAddress.getLoopbackAddress();
         }
 
-        return createNewServer(uuid, localHost, this.port, hostname);
+        return createNewServer(uuid, localHost, port, hostname);
     }
 
     public Server createNewServer(UUID uuid, InetAddress address, int port, String hostname) {

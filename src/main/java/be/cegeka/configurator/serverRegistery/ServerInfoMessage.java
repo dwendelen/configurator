@@ -1,6 +1,6 @@
 package be.cegeka.configurator.serverRegistery;
 
-import be.cegeka.configurator.listener.Message;
+import be.cegeka.configurator.message.Message;
 import be.cegeka.configurator.server.Server;
 
 import java.util.UUID;

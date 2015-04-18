@@ -1,6 +1,8 @@
 package be.cegeka.configurator.serverRegistery;
 
-import be.cegeka.configurator.connection.*;
+import be.cegeka.configurator.socket.*;
+import be.cegeka.configurator.message.Daemon;
+import be.cegeka.configurator.message.MessageSender;
 import be.cegeka.configurator.server.Server;
 import com.google.common.base.Optional;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -8,25 +10,24 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
 import java.net.InetAddress;
 
-class Multicaster {
+class JoinProtocol {
     public static final int PORT = 6548;
     public static final String MULTICAST = "ff05::dace";
 
     private MessageSender messageSender;
-    private MulticasterListener multicasterListener;
+    private JoinProtocolListener joinProtocolListener;
     private MulticasterDaemon multicasterDaemon;
     private Server thisServer;
 
-    public Multicaster(Server thisServer) throws IOException {
+    public JoinProtocol(Server thisServer) throws IOException {
         this.thisServer = thisServer;
         ObjectMapper objectMapper = new ObjectMapper();
-        MulticastConnection multicastConnection = new MulticastConnection(InetAddress.getByName(MULTICAST));
-        multicasterDaemon = new MulticasterDaemon(multicastConnection, objectMapper);
-        messageSender = new MessageSender(multicastConnection, objectMapper);
+        Socket multicastSocket = new SocketFactory().createMulticastSocket(MULTICAST);
+        multicasterDaemon = new MulticasterDaemon(multicastSocket, objectMapper);
+        messageSender = new MessageSender(multicastSocket, objectMapper);
     }
 
     public void start() throws IOException {
-        multicasterDaemon.init();
         multicasterDaemon.start();
 
         ServerInfoMessage serverInfoMessage = new ServerInfoMessage(thisServer);
@@ -37,19 +38,14 @@ class Multicaster {
         multicasterDaemon.stop();
     }
 
-    public void setMulticasterListener(MulticasterListener multicasterListener) {
-        this.multicasterListener = multicasterListener;
+    public void setJoinProtocolListener(JoinProtocolListener joinProtocolListener) {
+        this.joinProtocolListener = joinProtocolListener;
     }
 
     private class MulticasterDaemon extends Daemon<ServerInfoMessage> {
 
         public MulticasterDaemon(Socket socket, ObjectMapper objectMapper) throws IOException {
-            super(socket, objectMapper);
-        }
-
-        @Override
-        protected int getPort() {
-            return PORT;
+            super(socket, objectMapper, PORT);
         }
 
         @Override
@@ -59,8 +55,8 @@ class Multicaster {
 
         @Override
         protected void messageArrived(ServerInfoMessage message, InetAddress inetAddress) {
-            if (multicasterListener != null) {
-                multicasterListener.messageArrived(inetAddress, message);
+            if (joinProtocolListener != null) {
+                joinProtocolListener.newSereverArrived(inetAddress, message);
             }
         }
     }

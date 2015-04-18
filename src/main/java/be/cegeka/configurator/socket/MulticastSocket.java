@@ -1,18 +1,13 @@
-package be.cegeka.configurator.serverRegistery;
-
-import be.cegeka.configurator.connection.ListeningContext;
-import be.cegeka.configurator.connection.Session;
-import be.cegeka.configurator.connection.Socket;
+package be.cegeka.configurator.socket;
 
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.net.MulticastSocket;
 
-public class MulticastConnection implements Socket {
+class MulticastSocket implements Socket {
     private InetAddress multiCastAddress;
 
-    public MulticastConnection(InetAddress multiCastAddress) {
+    public MulticastSocket(InetAddress multiCastAddress) {
         this.multiCastAddress = multiCastAddress;
     }
 
@@ -27,10 +22,10 @@ public class MulticastConnection implements Socket {
     }
 
     private class MultiCastListeningContext implements ListeningContext {
-        private MulticastSocket multicastSocket;
+        private java.net.MulticastSocket multicastSocket;
 
         public MultiCastListeningContext(int port) throws IOException {
-            multicastSocket = new MulticastSocket(port);
+            multicastSocket = new java.net.MulticastSocket(port);
             multicastSocket.joinGroup(multiCastAddress);
         }
 
@@ -57,7 +52,7 @@ public class MulticastConnection implements Socket {
         private byte[] readBuffer = new byte[1024];
         DatagramPacket datagramPacket;
 
-        public void init(MulticastSocket multicastSocket) throws IOException {
+        public void init(java.net.MulticastSocket multicastSocket) throws IOException {
             datagramPacket = new DatagramPacket(readBuffer, readBuffer.length);
             multicastSocket.receive(datagramPacket);
         }
@@ -135,7 +130,7 @@ public class MulticastConnection implements Socket {
         private void send() throws IOException {
             byte[] buffer = byteArrayOutputStream.toByteArray();
             DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length, multiCastAddress, port);
-            new MulticastSocket().send(datagramPacket);
+            new java.net.MulticastSocket().send(datagramPacket);
         }
 
         @Override

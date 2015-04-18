@@ -1,32 +1,23 @@
-package be.cegeka.configurator.listener;
+package be.cegeka.configurator.messageProcessor;
 
-import be.cegeka.configurator.connection.Daemon;
+import be.cegeka.configurator.message.Daemon;
+import be.cegeka.configurator.message.Message;
+import be.cegeka.configurator.socket.Socket;
+import be.cegeka.configurator.socket.SocketFactory;
 import com.google.common.base.Optional;
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Enumeration;
-import java.util.Map;
 
-public class TCPListener implements Listener {
+class TCPMessageProcessor implements MessageProcessor {
     private MessageHandlerRepo messageHandlerRepo;
     private ListenerDaemon listenerDaemon;
 
-    public TCPListener(MessageHandlerRepo messageHandlerRepo) {
+    public TCPMessageProcessor(MessageHandlerRepo messageHandlerRepo) {
         ObjectMapper objectMapper = new ObjectMapper();
         this.messageHandlerRepo = messageHandlerRepo;
-        TCPSocket tcpSocket = new TCPSocket();
+        Socket tcpSocket = new SocketFactory().createTCPSocket();
         listenerDaemon = new ListenerDaemon(tcpSocket, objectMapper);
-    }
-
-    public void init() throws IOException {
-        listenerDaemon.init();
     }
 
     public void start() {
@@ -35,7 +26,7 @@ public class TCPListener implements Listener {
 
     @Override
     public int getPort() {
-        return listenerDaemon.getActualPort();
+        return listenerDaemon.getPort();
     }
 
     @Override
@@ -49,13 +40,8 @@ public class TCPListener implements Listener {
 
     private class ListenerDaemon extends Daemon<Message> {
 
-        protected ListenerDaemon(be.cegeka.configurator.connection.Socket socket, ObjectMapper objectMapper) {
-            super(socket, objectMapper);
-        }
-
-        @Override
-        protected int getPort() {
-            return 0;
+        protected ListenerDaemon(be.cegeka.configurator.socket.Socket socket, ObjectMapper objectMapper) {
+            super(socket, objectMapper, 0);
         }
 
         @Override
