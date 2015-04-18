@@ -20,7 +20,7 @@ public class Main {
         ServerRegisteryFactory serverRegisteryFactory = new ServerRegisteryFactory(serverFactory);
         ServerRegistery serverRegistery = serverRegisteryFactory.create();
 
-        List<MessageHandler> messageHandlers = serverRegistery.getMessageHandlers();
+        List<? extends MessageHandler> messageHandlers = serverRegistery.getMessageHandlers();
         for (MessageHandler messageHandler : messageHandlers) {
             listener.addMessageHandler(messageHandler);
         }
