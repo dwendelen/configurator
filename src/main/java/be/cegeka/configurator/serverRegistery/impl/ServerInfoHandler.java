@@ -12,10 +12,12 @@ import java.io.IOException;
 public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
     private Repository repository;
     private ServerFactory serverFactory;
+    private ServerListener serverListener;
 
-    public ServerInfoHandler(Repository repository, ServerFactory serverFactory) {
+    public ServerInfoHandler(Repository repository, ServerFactory serverFactory, ServerListener serverListener) {
         this.repository = repository;
         this.serverFactory = serverFactory;
+        this.serverListener = serverListener;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
 
     @Override
     public void handle(ServerInfoMessage message, Session session) {
-        System.out.println("INCOMMING");
+        //System.out.println("INCOMMING");
         ServerInfoMessage thisServerInfo = new ServerInfoMessage(repository);
 
         ServerInformation serverInformation = new ServerInformation();
@@ -42,29 +44,30 @@ public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
         handleServer(serverInformation, thisServerInfo);
 
         for (ServerInformation information : message.getServers()) {
-            System.out.println("DERIVE");
+            //System.out.println("DERIVE");
             handleServer(information, thisServerInfo);
         }
 
-        System.out.println();
+        //System.out.println();
     }
 
     private void handleServer(ServerInformation serverInformation, ServerInfoMessage thisServerInfo) {
-        System.out.println("SERVER: ");
-        System.out.println(serverInformation.getUuid());
+        //System.out.println("SERVER: ");
+        //System.out.println(serverInformation.getUuid());
 
         Optional<Server> server = repository.getServer(serverInformation.getUuid());
         if(server.isPresent()) {
-            System.out.println("ALREADY KNOWN");
+            //System.out.println("ALREADY KNOWN");
             return;
         }
 
-        System.out.println("NEW");
+        //System.out.println("NEW");
         handleNewServer(serverInformation, thisServerInfo);
     }
 
     private void handleNewServer(ServerInformation serverInformation, ServerInfoMessage thisServerInfo) {
         Server newServer = serverFactory.createNewServer(serverInformation);
+        newServer.addServerListener(serverListener);
         repository.addServer(newServer);
 
         newServer.send(thisServerInfo);

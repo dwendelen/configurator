@@ -19,6 +19,7 @@ public class Repository {
     }
 
     public synchronized void addServer(Server server) {
+        System.out.println("add: " + server.getUuid());
         if(otherServersMap.containsKey(server.getUuid())) {
             return;
         }
@@ -28,6 +29,7 @@ public class Repository {
     }
 
     public synchronized void removeServerByUuid(String uuid) {
+        System.out.println("Remove: " + uuid);
         Server server = otherServersMap.remove(uuid);
         otherServersList.remove(server);
     }

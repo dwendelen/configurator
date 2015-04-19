@@ -13,4 +13,5 @@ public interface Server {
     String getInetAddress();
     void send(Message message);
     void addServerListener(ServerListener serverListener);
+    void ping();
 }

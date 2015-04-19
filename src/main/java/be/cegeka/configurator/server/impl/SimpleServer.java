@@ -5,6 +5,8 @@ import be.cegeka.configurator.message.MessageSender;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerInformation;
 import be.cegeka.configurator.server.ServerListener;
+import be.cegeka.configurator.serverRegistery.impl.PingMessage;
+import com.google.common.base.Optional;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -41,14 +43,36 @@ public class SimpleServer implements Server {
         try {
             messageSender.send(this.getInetAddress(), this.getPort(), message);
         } catch (IOException e) {
-            for (ServerListener serverListener : serverListeners) {
-                serverListener.serverUnreachable(this);
-            }
+            notifyUnreachable();
+        }
+    }
+
+    private <T> Optional<T> sendAndReceive(Message message, Class<T> classResponse) {
+        try {
+            T response = messageSender.sendAnReceive(this.getInetAddress(), this.getPort(), message, classResponse);
+            return Optional.of(response);
+        } catch (IOException e) {
+            notifyUnreachable();
+            return Optional.absent();
         }
     }
 
     @Override
     public void addServerListener(ServerListener serverListener) {
         serverListeners.add(serverListener);
+    }
+
+    @Override
+    public void ping() {
+        Optional<String> stringOptional = sendAndReceive(new PingMessage(), String.class);
+        if(!getUuid().equals(stringOptional.orNull())) {
+            notifyUnreachable();
+        }
+    }
+
+    private void notifyUnreachable() {
+        for (ServerListener serverListener : serverListeners) {
+            serverListener.serverUnreachable(this);
+        }
     }
 }

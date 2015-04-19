@@ -26,11 +26,16 @@ public class UnreachableHandler implements MessageHandler<UnreachableMessage> {
 
     @Override
     public void handle(UnreachableMessage message, Session session) {
+        /*System.out.println("UNREACHABLE");
+        System.out.println(message.getUuid());*/
+
         Optional<Server> server = repository.getServer(message.getUuid());
         if(!server.isPresent()) {
+            //System.out.println("UNKNOWN");
             return;
         }
 
-        server.get().send(new PingMessage());
+        //System.out.println("PING");
+        server.get().ping();
     }
 }

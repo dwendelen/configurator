@@ -25,13 +25,13 @@ public class QuitHandler implements MessageHandler<QuitMessage> {
 
     @Override
     public void handle(QuitMessage message, Session session) {
-        System.out.println("QUIT");
+        //System.out.println("QUIT");
         if(!repository.hasServer(message.getUuid())) {
-            System.out.println("UNKNOWN");
+            //System.out.println("UNKNOWN");
             return;
         }
 
-        System.out.println("DELETE AND SPREAD");
+        //System.out.println("DELETE AND SPREAD");
         repository.removeServerByUuid(message.getUuid());
         new Broadcaster(repository).broadcast(message);
     }

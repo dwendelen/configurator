@@ -30,11 +30,14 @@ public class ServerRegisteryFactory {
         Server thisServer = serverFactory.createThisServer(messageProcessor.getPort().get());
         Repository repository = new Repository(thisServer);
 
-        ServerInfoHandler serverInfoHandler = new ServerInfoHandler(repository, serverFactory);
+        ServerListener serverListener = new ServerListener(repository);
+        ServerInfoHandler serverInfoHandler = new ServerInfoHandler(repository, serverFactory, serverListener);
         QuitHandler quitHandler = new QuitHandler(repository);
+        UnreachableHandler messageHandler = new UnreachableHandler(repository);
 
         messageProcessor.addMessageHandler(serverInfoHandler);
         messageProcessor.addMessageHandler(quitHandler);
+        messageProcessor.addMessageHandler(messageHandler);
 
         Socket multicastSocket = socketFactory.createMulticastSocket(MulticastServerRegistery.MULTICAST);
         NewServerDaemon newServerDaemon = new NewServerDaemon(multicastSocket, objectMapper, MulticastServerRegistery.PORT, thisServer.getUuid(), serverInfoHandler);
