@@ -32,11 +32,11 @@ public class ServerRegisteryFactory {
 
         ServerListener serverListener = new ServerListener(repository);
         ServerInfoHandler serverInfoHandler = new ServerInfoHandler(repository, serverFactory, serverListener);
-        QuitHandler quitHandler = new QuitHandler(repository);
+        //QuitHandler quitHandler = new QuitHandler(repository);
         UnreachableHandler messageHandler = new UnreachableHandler(repository);
 
         messageProcessor.addMessageHandler(serverInfoHandler);
-        messageProcessor.addMessageHandler(quitHandler);
+        //messageProcessor.addMessageHandler(quitHandler);
         messageProcessor.addMessageHandler(messageHandler);
 
         Socket multicastSocket = socketFactory.createMulticastSocket(MulticastServerRegistery.MULTICAST);

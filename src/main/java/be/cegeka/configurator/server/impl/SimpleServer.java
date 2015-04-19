@@ -65,7 +65,11 @@ public class SimpleServer implements Server {
     @Override
     public void ping() {
         Optional<String> stringOptional = sendAndReceive(new PingMessage(), String.class);
-        if(!getUuid().equals(stringOptional.orNull())) {
+        if(!stringOptional.isPresent()) {
+            return;
+        }
+
+        if(!getUuid().equals(stringOptional.get())) {
             notifyUnreachable();
         }
     }

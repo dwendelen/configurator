@@ -29,6 +29,9 @@ public class Repository {
     }
 
     public synchronized void removeServerByUuid(String uuid) {
+        if(!otherServersMap.containsKey(uuid)) {
+            return;
+        }
         System.out.println("Remove: " + uuid);
         Server server = otherServersMap.remove(uuid);
         otherServersList.remove(server);
@@ -44,9 +47,5 @@ public class Repository {
 
     public synchronized List<Server> getServers() {
         return new LinkedList<Server>(otherServersList);
-    }
-
-    public boolean hasServer(String uuid) {
-        return otherServersMap.containsKey(uuid);
     }
 }

@@ -31,10 +31,11 @@ public class MulticastServerRegistery implements ServerRegistery {
 
     public void stop() {
         newServerDaemon.stop();
-        QuitMessage quitMessage = new QuitMessage();
-        quitMessage.setUuid(getThisServer().getUuid());
-
-        new Broadcaster(repository).broadcast(quitMessage);
+        //QuitMessage quitMessage = new QuitMessage();
+        //quitMessage.setUuid(getThisServer().getUuid());
+        UnreachableMessage unreachableMessage = new UnreachableMessage();
+        unreachableMessage.setUuid(getThisServer().getUuid());
+        new Broadcaster(repository).broadcast(unreachableMessage);
     }
 
     @Override

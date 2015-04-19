@@ -34,7 +34,7 @@ public class Main {
 
         System.in.read();
 
-        serverRegistery.stop();
         messageProcessor.stop();
+        serverRegistery.stop();
     }
 }
