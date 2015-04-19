@@ -67,12 +67,6 @@ public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
         Server newServer = serverFactory.createNewServer(serverInformation);
         repository.addServer(newServer);
 
-        try {
-            newServer.send(thisServerInfo);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        newServer.send(thisServerInfo);
     }
 }

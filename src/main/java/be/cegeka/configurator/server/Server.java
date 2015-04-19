@@ -11,5 +11,6 @@ public interface Server {
     int getPort();
     String getHostname();
     String getInetAddress();
-    void send(Message message) throws IOException;
+    void send(Message message);
+    void addServerListener(ServerListener serverListener);
 }

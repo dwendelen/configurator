@@ -4,12 +4,16 @@ import be.cegeka.configurator.message.Message;
 import be.cegeka.configurator.message.MessageSender;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerInformation;
+import be.cegeka.configurator.server.ServerListener;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SimpleServer implements Server {
     private MessageSender messageSender;
     private ServerInformation serverInformation;
+    private List<ServerListener> serverListeners = new LinkedList<ServerListener>();
 
     public SimpleServer(MessageSender messageSender, ServerInformation serverInformation) {
         this.messageSender = messageSender;
@@ -33,7 +37,18 @@ public class SimpleServer implements Server {
     }
 
     @Override
-    public void send(Message message) throws IOException {
-        messageSender.send(this.getInetAddress(), this.getPort(), message);
+    public void send(Message message) {
+        try {
+            messageSender.send(this.getInetAddress(), this.getPort(), message);
+        } catch (IOException e) {
+            for (ServerListener serverListener : serverListeners) {
+                serverListener.serverUnreachable(this);
+            }
+        }
+    }
+
+    @Override
+    public void addServerListener(ServerListener serverListener) {
+        serverListeners.add(serverListener);
     }
 }

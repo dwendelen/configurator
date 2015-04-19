@@ -2,9 +2,8 @@ package be.cegeka.configurator.serverRegistery.impl;
 
 import be.cegeka.configurator.message.Message;
 
-public class QuitMessage implements Message {
-
-    public static final String TYPE = "quit";
+public class UnreachableMessage implements Message {
+    public static final String TYPE = "unreachable";
     private String uuid;
 
     @Override
@@ -17,9 +16,11 @@ public class QuitMessage implements Message {
 
     }
 
+
     public String getUuid() {
         return uuid;
     }
+
 
     public void setUuid(String uuid) {
         this.uuid = uuid;

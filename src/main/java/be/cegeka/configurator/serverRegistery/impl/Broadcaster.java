@@ -14,11 +14,7 @@ public class Broadcaster {
 
     public void broadcast(Message message) {
         for (Server server : repository.getServers()) {
-            try {
-                server.send(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            server.send(message);
         }
     }
 }
