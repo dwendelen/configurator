@@ -9,4 +9,5 @@ public interface MessageProcessor {
     void stop();
     Optional<Integer> getPort();
     void addMessageHandler(MessageHandler messageHandler);
+    void addListener(MessageProcessorListener messageProcessorListener);
 }

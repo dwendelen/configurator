@@ -5,7 +5,6 @@ import java.util.List;
 
 public interface ServerRegistery {
     void start() throws IOException;
-    void stop();
     List<Server> getServers();
     Server getThisServer();
 }

@@ -6,6 +6,8 @@ import com.google.common.base.Optional;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 
 public class MessageSender {

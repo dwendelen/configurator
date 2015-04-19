@@ -28,8 +28,11 @@ public class PingHandler implements MessageHandler<PingMessage> {
     @Override
     public void handle(PingMessage message, Session session) {
         try {
+            //Pong pong = new Pong();
+            //pong.setUuid(uuid);
             messageSender.send(session, uuid);
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -5,6 +5,7 @@ import be.cegeka.configurator.message.MessageSenderFactory;
 import be.cegeka.configurator.messageProcessor.MessageProcessor;
 import be.cegeka.configurator.serverRegistery.impl.ServerFactory;
 import be.cegeka.configurator.serverRegistery.impl.*;
+import be.cegeka.configurator.serverRegistery.impl.message.PingHandler;
 import be.cegeka.configurator.serverRegistery.impl.message.ServerInfoHandler;
 import be.cegeka.configurator.serverRegistery.impl.message.UnreachableHandler;
 import be.cegeka.configurator.socket.Socket;
@@ -31,16 +32,24 @@ public class ServerRegisteryFactory {
         Repository repository = new Repository(thisServer);
 
         ServerListenerForRegistry serverListener = new ServerListenerForRegistry(repository);
+
         ServerInfoHandler serverInfoHandler = new ServerInfoHandler(repository, serverFactory, serverListener);
         UnreachableHandler messageHandler = new UnreachableHandler(repository);
+        PingHandler pingHandler = new PingHandler(tcpMessageSender, thisServer.getUuid());
 
         messageProcessor.addMessageHandler(serverInfoHandler);
         messageProcessor.addMessageHandler(messageHandler);
+        messageProcessor.addMessageHandler(pingHandler);
 
         Socket multicastSocket = socketFactory.createMulticastSocket(MulticastServerRegistery.MULTICAST);
         NewServerDaemon newServerDaemon = new NewServerDaemon(multicastSocket, objectMapper, MulticastServerRegistery.PORT, thisServer.getUuid(), serverInfoHandler);
         MessageSender messageSender = messageSenderFactory.create(multicastSocket);
 
-        return new MulticastServerRegistery(repository, newServerDaemon, messageSender);
+        MulticastServerRegistery multicastServerRegistery = new MulticastServerRegistery(repository, newServerDaemon, messageSender);
+
+        MessageProcessorWatcher messageProcessorWatcher = new MessageProcessorWatcher(multicastServerRegistery);
+        messageProcessor.addListener(messageProcessorWatcher);
+
+        return multicastServerRegistery;
     }
 }

@@ -10,6 +10,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class Daemon<T extends Message> {
     private Runner runner = new Runner();
@@ -21,6 +23,10 @@ public abstract class Daemon<T extends Message> {
         this.socket = socket;
         this.objectMapper = objectMapper;
         this.port = port;
+    }
+
+    private String deriveName() {
+        return this.getClass().getSimpleName();
     }
 
     public void start() {
@@ -40,6 +46,9 @@ public abstract class Daemon<T extends Message> {
     protected abstract void messageArrived(T message, Session session);
 
     private class Runner extends Thread {
+        public Runner() {
+            super(deriveName());
+        }
         private ListeningContext listeningContext;
 
         public void start() {
@@ -59,7 +68,7 @@ public abstract class Daemon<T extends Message> {
                     if (isInterrupted()) {
                         break;
                     }
-                    listenAndCloseSession();
+                    listen();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -74,21 +83,27 @@ public abstract class Daemon<T extends Message> {
             super.interrupt();
         }
 
-        private void listenAndCloseSession() throws IOException {
-            Session session = new NullSession();
+        private void listen() {
             try {
-                session = listeningContext.waitForSession();
-                listen(session);
+                listenThrowingExceptions();
             } catch (IOException e) {
                 if(!isInterrupted()) {
                     e.printStackTrace();
                 }
+                return;
+            }
+        }
+
+        private void listenThrowingExceptions() throws IOException {
+            Session session = listeningContext.waitForSession();
+            try {
+                handle(session);
             } finally {
                 session.close();
             }
         }
 
-        private void listen(Session session) throws IOException {
+        private void handle(Session session) throws IOException {
             JsonNode jsonNode = objectMapper.readTree(session.read());
 
             if(!jsonNode.has("type")) {
@@ -96,6 +111,7 @@ public abstract class Daemon<T extends Message> {
             }
 
             Optional<? extends Class<? extends T>> messageClass = deriveMessageClass(jsonNode.get("type").asText());
+
             if(!messageClass.isPresent()) {
                 return;
             }

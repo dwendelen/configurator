@@ -47,7 +47,6 @@ public class TCPSocket implements Socket {
     private class TCPSession implements Session {
         private java.net.Socket socket;
 
-
         public TCPSession(java.net.Socket socket) {
             this.socket = socket;
         }
@@ -56,6 +55,7 @@ public class TCPSocket implements Socket {
             socket = new java.net.Socket(server, port);
         }
 
+
         @Override
         public String getAddress() {
             return socket.getInetAddress().getHostAddress();
@@ -63,12 +63,44 @@ public class TCPSocket implements Socket {
 
         @Override
         public InputStream read() throws IOException {
-            return socket.getInputStream();
+            return new InputStream() {
+                private InputStream inputStream = socket.getInputStream();
+                @Override
+                public int read() throws IOException {
+                    int read = inputStream.read();
+                    if(read == 0) {
+                        return -1;
+                    }
+
+                    return read;
+                }
+
+                @Override
+                public void close() throws IOException {
+                }
+            };
         }
 
         @Override
         public OutputStream write() throws IOException {
-            return socket.getOutputStream();
+            return new OutputStream() {
+                private OutputStream outputStream = socket.getOutputStream();
+
+                @Override
+                public void write(int i) throws IOException {
+                    outputStream.write(i);
+                }
+
+                @Override
+                public void close() throws IOException {
+                    outputStream.write(0);
+                }
+
+                @Override
+                public void flush() throws IOException {
+                    outputStream.flush();
+                }
+            };
         }
 
         @Override
