@@ -5,6 +5,7 @@ import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerFactory;
 import be.cegeka.configurator.server.ServerInformation;
 import be.cegeka.configurator.serverRegistery.impl.Repository;
+import be.cegeka.configurator.socket.Session;
 
 import java.net.InetAddress;
 
@@ -28,11 +29,11 @@ public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
         }
 
         @Override
-        public void handle(ServerInfoMessage message, String inetAddress) {
+        public void handle(ServerInfoMessage message, Session session) {
             ServerInformation serverInformation = new ServerInformation();
             serverInformation.setPort(message.getPort());
             serverInformation.setHostname(message.getHostname());
-            serverInformation.setInetAddress(inetAddress);
+            serverInformation.setInetAddress(session.getAddress());
             serverInformation.setUuid(message.getUuid());
 
             Server newServer = serverFactory.createNewServer(serverInformation);

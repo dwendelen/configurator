@@ -36,7 +36,7 @@ public abstract class Daemon<T extends Message> {
 
     protected abstract Optional<? extends Class<? extends T>> deriveMessageClass(String type);
 
-    protected abstract void messageArrived(T message, String inetAddress);
+    protected abstract void messageArrived(T message, Session session);
 
     private class Runner extends Thread {
         private ListeningContext listeningContext;
@@ -98,7 +98,7 @@ public abstract class Daemon<T extends Message> {
             }
 
             T message = objectMapper.readValue(jsonNode, messageClass.get());
-            messageArrived(message, session.getAddress());
+            messageArrived(message, session);
         }
 
         private void closeConnection() {

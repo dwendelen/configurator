@@ -3,6 +3,7 @@ package be.cegeka.configurator.messageProcessor.impl;
 import be.cegeka.configurator.message.Daemon;
 import be.cegeka.configurator.message.Message;
 import be.cegeka.configurator.messageProcessor.MessageHandler;
+import be.cegeka.configurator.socket.Session;
 import be.cegeka.configurator.socket.Socket;
 import com.google.common.base.Optional;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -27,13 +28,13 @@ public class ListenerDaemon extends Daemon<Message> {
     }
 
     @Override
-    protected void messageArrived(Message message, String inetAddress) {
+    protected void messageArrived(Message message, Session session) {
         Optional<MessageHandler<Message>> messageHandlerOptional = messageHandlerRepo.get(message.getType());
         if(!messageHandlerOptional.isPresent()) {
             return;
         }
 
         MessageHandler<Message> messageHandler = messageHandlerOptional.get();
-        messageHandler.handle(message, inetAddress);
+        messageHandler.handle(message, session);
     }
 }
