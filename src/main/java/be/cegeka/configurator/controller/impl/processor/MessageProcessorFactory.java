@@ -1,8 +1,8 @@
-package be.cegeka.configurator.messageProcessor;
+package be.cegeka.configurator.controller.impl.processor;
 
-import be.cegeka.configurator.messageProcessor.impl.ListenerDaemon;
-import be.cegeka.configurator.messageProcessor.impl.MessageHandlerRepo;
-import be.cegeka.configurator.messageProcessor.impl.TCPMessageProcessor;
+import be.cegeka.configurator.controller.impl.processor.impl.ListenerDaemon;
+import be.cegeka.configurator.controller.impl.processor.impl.MessageHandlerRepo;
+import be.cegeka.configurator.controller.impl.processor.impl.TCPMessageProcessor;
 import be.cegeka.configurator.socket.Socket;
 import be.cegeka.configurator.socket.SocketFactory;
 import org.codehaus.jackson.map.ObjectMapper;

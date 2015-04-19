@@ -1,4 +1,4 @@
-package be.cegeka.configurator.message;
+package be.cegeka.configurator.controller.impl;
 
 import be.cegeka.configurator.socket.ListeningContext;
 import be.cegeka.configurator.socket.Session;
@@ -8,9 +8,8 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
-public abstract class Daemon<T extends Message> {
+public abstract class Daemon<T extends JSONMessage> {
     private Runner runner = new Runner();
     private Socket socket;
     private ObjectMapper objectMapper;

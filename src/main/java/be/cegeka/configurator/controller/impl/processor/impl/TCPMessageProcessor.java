@@ -1,15 +1,8 @@
-package be.cegeka.configurator.messageProcessor.impl;
+package be.cegeka.configurator.controller.impl.processor.impl;
 
-import be.cegeka.configurator.message.Daemon;
-import be.cegeka.configurator.message.Message;
-import be.cegeka.configurator.messageProcessor.MessageHandler;
-import be.cegeka.configurator.messageProcessor.MessageProcessor;
-import be.cegeka.configurator.socket.Socket;
-import be.cegeka.configurator.socket.SocketFactory;
+import be.cegeka.configurator.controller.impl.processor.JSONMessageHandler;
+import be.cegeka.configurator.controller.impl.processor.MessageProcessor;
 import com.google.common.base.Optional;
-import org.codehaus.jackson.map.ObjectMapper;
-
-import java.net.InetAddress;
 
 public class TCPMessageProcessor implements MessageProcessor {
     private MessageHandlerRepo messageHandlerRepo;
@@ -30,8 +23,8 @@ public class TCPMessageProcessor implements MessageProcessor {
     }
 
     @Override
-    public void addMessageHandler(MessageHandler messageHandler) {
-        messageHandlerRepo.add(messageHandler);
+    public void addMessageHandler(JSONMessageHandler JSONMessageHandler) {
+        messageHandlerRepo.add(JSONMessageHandler);
     }
 
     public void stop() {

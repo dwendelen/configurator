@@ -1,17 +1,13 @@
-package be.cegeka.configurator.serverRegistery.impl.protocol;
+package be.cegeka.configurator.controller.impl.serverRegistery.impl.protocol;
 
 import be.cegeka.configurator.server.ServerInformation;
-import be.cegeka.configurator.serverRegistery.impl.Repository;
-import be.cegeka.configurator.serverRegistery.impl.message.ServerInfoMessage;
+import be.cegeka.configurator.controller.impl.serverRegistery.impl.message.ServerInfoMessage;
 import be.cegeka.configurator.socket.*;
-import be.cegeka.configurator.message.Daemon;
-import be.cegeka.configurator.message.MessageSender;
+import be.cegeka.configurator.controller.impl.MessageSender;
 import be.cegeka.configurator.server.Server;
-import com.google.common.base.Optional;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 public class JoinProtocol implements NewServerListener {
     public static final int PORT = 6548;

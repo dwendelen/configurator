@@ -1,6 +1,6 @@
-package be.cegeka.configurator.serverRegistery.impl.protocol;
+package be.cegeka.configurator.controller.impl.serverRegistery.impl.protocol;
 
-import be.cegeka.configurator.message.MessageSender;
+import be.cegeka.configurator.controller.impl.MessageSender;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.socket.Socket;
 import be.cegeka.configurator.socket.SocketFactory;

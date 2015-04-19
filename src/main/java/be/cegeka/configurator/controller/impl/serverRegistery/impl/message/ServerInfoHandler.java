@@ -1,14 +1,12 @@
-package be.cegeka.configurator.serverRegistery.impl.message;
+package be.cegeka.configurator.controller.impl.serverRegistery.impl.message;
 
-import be.cegeka.configurator.messageProcessor.MessageHandler;
+import be.cegeka.configurator.controller.impl.processor.JSONMessageHandler;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerFactory;
 import be.cegeka.configurator.server.ServerInformation;
-import be.cegeka.configurator.serverRegistery.impl.Repository;
+import be.cegeka.configurator.controller.impl.serverRegistery.impl.Repository;
 
-import java.net.InetAddress;
-
-public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
+public class ServerInfoHandler implements JSONMessageHandler<ServerInfoMessage> {
     private Repository repository;
     private ServerFactory serverFactory;
 

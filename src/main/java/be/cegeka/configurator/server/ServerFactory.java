@@ -1,6 +1,6 @@
 package be.cegeka.configurator.server;
 
-import be.cegeka.configurator.message.MessageSender;
+import be.cegeka.configurator.controller.impl.MessageSender;
 import be.cegeka.configurator.server.impl.SimpleServer;
 
 import java.net.InetAddress;

@@ -1,6 +1,5 @@
-package be.cegeka.configurator.serverRegistery;
+package be.cegeka.configurator.controller.impl.serverRegistery;
 
-import be.cegeka.configurator.messageProcessor.MessageHandler;
 import be.cegeka.configurator.server.Server;
 
 import java.io.IOException;

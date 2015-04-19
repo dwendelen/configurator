@@ -1,11 +1,10 @@
-package be.cegeka.configurator.message;
+package be.cegeka.configurator.controller.impl;
 
 import be.cegeka.configurator.socket.Session;
 import be.cegeka.configurator.socket.Socket;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 public class MessageSender {
     private Socket socket;
@@ -16,9 +15,9 @@ public class MessageSender {
         this.objectMapper = objectMapper;
     }
 
-    public void send(String server, int port, Message message) throws IOException {
+    public void send(String server, int port, JSONMessage JSONMessage) throws IOException {
         Session session = socket.open(server, port);
-        objectMapper.writeValue(session.write(), message);
+        objectMapper.writeValue(session.write(), JSONMessage);
         session.close();
     }
 }

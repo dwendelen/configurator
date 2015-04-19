@@ -1,7 +1,7 @@
 package be.cegeka.configurator.server.impl;
 
-import be.cegeka.configurator.message.Message;
-import be.cegeka.configurator.message.MessageSender;
+import be.cegeka.configurator.controller.impl.JSONMessage;
+import be.cegeka.configurator.controller.impl.MessageSender;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerInformation;
 
@@ -33,7 +33,7 @@ public class SimpleServer implements Server {
     }
 
     @Override
-    public void send(Message message) throws IOException {
-        messageSender.send(this.getInetAddress(), this.getPort(), message);
+    public void send(JSONMessage JSONMessage) throws IOException {
+        messageSender.send(this.getInetAddress(), this.getPort(), JSONMessage);
     }
 }

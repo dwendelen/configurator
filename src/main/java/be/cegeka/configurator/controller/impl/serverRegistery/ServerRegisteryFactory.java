@@ -1,12 +1,12 @@
-package be.cegeka.configurator.serverRegistery;
+package be.cegeka.configurator.controller.impl.serverRegistery;
 
-import be.cegeka.configurator.messageProcessor.MessageProcessor;
+import be.cegeka.configurator.controller.impl.processor.MessageProcessor;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.server.ServerFactory;
-import be.cegeka.configurator.serverRegistery.impl.*;
-import be.cegeka.configurator.serverRegistery.impl.message.ServerInfoHandler;
-import be.cegeka.configurator.serverRegistery.impl.protocol.JoinProtocol;
-import be.cegeka.configurator.serverRegistery.impl.protocol.JoinProtocolFactory;
+import be.cegeka.configurator.controller.impl.serverRegistery.impl.*;
+import be.cegeka.configurator.controller.impl.serverRegistery.impl.message.ServerInfoHandler;
+import be.cegeka.configurator.controller.impl.serverRegistery.impl.protocol.JoinProtocol;
+import be.cegeka.configurator.controller.impl.serverRegistery.impl.protocol.JoinProtocolFactory;
 
 import java.io.IOException;
 

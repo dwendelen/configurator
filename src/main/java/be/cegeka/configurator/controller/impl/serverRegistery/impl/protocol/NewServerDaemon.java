@@ -1,18 +1,13 @@
-package be.cegeka.configurator.serverRegistery.impl.protocol;
+package be.cegeka.configurator.controller.impl.serverRegistery.impl.protocol;
 
-import be.cegeka.configurator.message.Daemon;
-import be.cegeka.configurator.message.MessageSender;
-import be.cegeka.configurator.server.Server;
+import be.cegeka.configurator.controller.impl.Daemon;
 import be.cegeka.configurator.server.ServerInformation;
-import be.cegeka.configurator.serverRegistery.impl.message.ServerInfoMessage;
+import be.cegeka.configurator.controller.impl.serverRegistery.impl.message.ServerInfoMessage;
 import be.cegeka.configurator.socket.Socket;
-import be.cegeka.configurator.socket.SocketFactory;
 import com.google.common.base.Optional;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.UUID;
 
 public class NewServerDaemon extends Daemon<ServerInfoMessage> {
     private final String uuidToBlock;

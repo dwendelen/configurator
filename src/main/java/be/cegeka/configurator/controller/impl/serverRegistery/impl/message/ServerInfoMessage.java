@@ -1,11 +1,9 @@
-package be.cegeka.configurator.serverRegistery.impl.message;
+package be.cegeka.configurator.controller.impl.serverRegistery.impl.message;
 
-import be.cegeka.configurator.message.Message;
+import be.cegeka.configurator.controller.impl.JSONMessage;
 import be.cegeka.configurator.server.Server;
 
-import java.util.UUID;
-
-public class ServerInfoMessage implements Message {
+public class ServerInfoMessage implements JSONMessage {
     public static final String MESSAGE_TYPE = "serverInfo";
 
     private String uuid;

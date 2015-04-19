@@ -1,4 +1,4 @@
-package be.cegeka.configurator.serverRegistery.impl;
+package be.cegeka.configurator.controller.impl.serverRegistery.impl;
 
 import be.cegeka.configurator.server.Server;
 import com.google.common.base.Optional;
