@@ -27,12 +27,12 @@ public class Repository {
         otherServersMap.put(server.getUuid(), server);
     }
 
-    public void removeServerByUuid(UUID uuid) {
+    public void removeServerByUuid(String uuid) {
         Server server = otherServersMap.remove(uuid);
         otherServersList.remove(server);
     }
 
-    public Optional<Server> getServer(UUID uuid) {
+    public Optional<Server> getServer(String uuid) {
         if(otherServersMap.containsKey(uuid)) {
             return Optional.of(otherServersMap.get(uuid));
         } else {

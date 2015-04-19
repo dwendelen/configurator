@@ -1,29 +1,36 @@
 package be.cegeka.configurator.serverRegistery.impl;
 
+import be.cegeka.configurator.message.MessageSender;
 import be.cegeka.configurator.server.Server;
 import be.cegeka.configurator.serverRegistery.ServerRegistery;
-import be.cegeka.configurator.serverRegistery.impl.protocol.JoinProtocol;
 
 import java.io.IOException;
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
 
 public class MulticastServerRegistery implements ServerRegistery {
-    private JoinProtocol joinProtocol;
-    private Repository repository;
+    public static final int PORT = 6548;
+    public static final String MULTICAST = "ff05::dace";
 
-    public MulticastServerRegistery(JoinProtocol joinProtocol, Repository repository) {
-        this.joinProtocol = joinProtocol;
+    private Repository repository;
+    private NewServerDaemon newServerDaemon;
+    private MessageSender messageSender;
+
+    public MulticastServerRegistery(Repository repository, NewServerDaemon newServerDaemon, MessageSender messageSender) {
         this.repository = repository;
+        this.newServerDaemon = newServerDaemon;
+        this.messageSender = messageSender;
     }
 
     public void start() throws IOException {
-        joinProtocol.start();
+        newServerDaemon.start();
+
+        ServerInfoMessage serverInfoMessage = new ServerInfoMessage(repository);
+        messageSender.send(MULTICAST, PORT, serverInfoMessage);
     }
 
     public void stop() {
-        joinProtocol.stop();
+        newServerDaemon.stop();
     }
 
     @Override

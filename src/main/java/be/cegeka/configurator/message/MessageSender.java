@@ -11,7 +11,7 @@ public class MessageSender {
     private Socket socket;
     private ObjectMapper objectMapper;
 
-    public MessageSender(Socket socket, ObjectMapper objectMapper) {
+    protected MessageSender(Socket socket, ObjectMapper objectMapper) {
         this.socket = socket;
         this.objectMapper = objectMapper;
     }
