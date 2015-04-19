@@ -9,6 +9,10 @@ import java.io.IOException;
 public class QuitHandler implements MessageHandler<QuitMessage> {
     private Repository repository;
 
+    public QuitHandler(Repository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public Class<QuitMessage> getMessageClass() {
         return QuitMessage.class;
@@ -29,12 +33,6 @@ public class QuitHandler implements MessageHandler<QuitMessage> {
 
         System.out.println("DELETE AND SPREAD");
         repository.removeServerByUuid(message.getUuid());
-        for (Server server : repository.getServers()) {
-            try {
-                server.send(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        new Broadcaster(repository).broadcast(message);
     }
 }

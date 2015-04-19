@@ -18,7 +18,7 @@ public class Repository {
         return thisServer;
     }
 
-    public void addServer(Server server) {
+    public synchronized void addServer(Server server) {
         if(otherServersMap.containsKey(server.getUuid())) {
             return;
         }
@@ -27,12 +27,12 @@ public class Repository {
         otherServersMap.put(server.getUuid(), server);
     }
 
-    public void removeServerByUuid(String uuid) {
+    public synchronized void removeServerByUuid(String uuid) {
         Server server = otherServersMap.remove(uuid);
         otherServersList.remove(server);
     }
 
-    public Optional<Server> getServer(String uuid) {
+    public synchronized Optional<Server> getServer(String uuid) {
         if(otherServersMap.containsKey(uuid)) {
             return Optional.of(otherServersMap.get(uuid));
         } else {
@@ -40,7 +40,7 @@ public class Repository {
         }
     }
 
-    public List<Server> getServers() {
+    public synchronized List<Server> getServers() {
         return new LinkedList<Server>(otherServersList);
     }
 

@@ -31,5 +31,10 @@ public class Main {
 
         ServerRegistery serverRegistery = serverRegisteryFactory.create(messageProcessor);
         serverRegistery.start();
+
+        System.in.read();
+
+        serverRegistery.stop();
+        messageProcessor.stop();
     }
 }

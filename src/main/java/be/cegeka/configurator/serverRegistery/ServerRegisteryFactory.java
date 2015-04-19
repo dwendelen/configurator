@@ -31,8 +31,10 @@ public class ServerRegisteryFactory {
         Repository repository = new Repository(thisServer);
 
         ServerInfoHandler serverInfoHandler = new ServerInfoHandler(repository, serverFactory);
+        QuitHandler quitHandler = new QuitHandler(repository);
 
         messageProcessor.addMessageHandler(serverInfoHandler);
+        messageProcessor.addMessageHandler(quitHandler);
 
         Socket multicastSocket = socketFactory.createMulticastSocket(MulticastServerRegistery.MULTICAST);
         NewServerDaemon newServerDaemon = new NewServerDaemon(multicastSocket, objectMapper, MulticastServerRegistery.PORT, thisServer.getUuid(), serverInfoHandler);

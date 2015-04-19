@@ -1,6 +1,7 @@
 package be.cegeka.configurator.message;
 
 import be.cegeka.configurator.socket.ListeningContext;
+import be.cegeka.configurator.socket.NullSession;
 import be.cegeka.configurator.socket.Session;
 import be.cegeka.configurator.socket.Socket;
 import com.google.common.base.Optional;
@@ -74,11 +75,14 @@ public abstract class Daemon<T extends Message> {
         }
 
         private void listenAndCloseSession() throws IOException {
-            Session session = listeningContext.waitForSession();
+            Session session = new NullSession();
             try {
+                session = listeningContext.waitForSession();
                 listen(session);
             } catch (IOException e) {
-                e.printStackTrace();
+                if(!isInterrupted()) {
+                    e.printStackTrace();
+                }
             } finally {
                 session.close();
             }
@@ -88,7 +92,6 @@ public abstract class Daemon<T extends Message> {
             JsonNode jsonNode = objectMapper.readTree(session.read());
 
             if(!jsonNode.has("type")) {
-                session.close();
                 return;
             }
 

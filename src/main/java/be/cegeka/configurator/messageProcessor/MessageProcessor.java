@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public interface MessageProcessor {
     void start();
+    void stop();
     Optional<Integer> getPort();
     void addMessageHandler(MessageHandler messageHandler);
 }
