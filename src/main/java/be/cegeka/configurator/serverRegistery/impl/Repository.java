@@ -43,4 +43,8 @@ public class Repository {
     public List<Server> getServers() {
         return new LinkedList<Server>(otherServersList);
     }
+
+    public boolean hasServer(String uuid) {
+        return otherServersMap.containsKey(uuid);
+    }
 }
