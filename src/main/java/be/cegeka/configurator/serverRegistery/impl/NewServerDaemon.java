@@ -1,6 +1,8 @@
 package be.cegeka.configurator.serverRegistery.impl;
 
 import be.cegeka.configurator.message.Daemon;
+import be.cegeka.configurator.serverRegistery.impl.message.ServerInfoHandler;
+import be.cegeka.configurator.serverRegistery.impl.message.ServerInfoMessage;
 import be.cegeka.configurator.socket.Session;
 import be.cegeka.configurator.socket.Socket;
 import com.google.common.base.Optional;

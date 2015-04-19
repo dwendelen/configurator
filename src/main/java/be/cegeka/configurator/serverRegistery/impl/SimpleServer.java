@@ -1,11 +1,10 @@
-package be.cegeka.configurator.server.impl;
+package be.cegeka.configurator.serverRegistery.impl;
 
 import be.cegeka.configurator.message.Message;
 import be.cegeka.configurator.message.MessageSender;
-import be.cegeka.configurator.server.Server;
-import be.cegeka.configurator.server.ServerInformation;
-import be.cegeka.configurator.server.ServerListener;
-import be.cegeka.configurator.serverRegistery.impl.PingMessage;
+import be.cegeka.configurator.serverRegistery.Server;
+import be.cegeka.configurator.serverRegistery.ServerListener;
+import be.cegeka.configurator.serverRegistery.impl.message.PingMessage;
 import com.google.common.base.Optional;
 
 import java.io.IOException;
@@ -63,15 +62,18 @@ public class SimpleServer implements Server {
     }
 
     @Override
-    public void ping() {
+    public boolean ping() {
         Optional<String> stringOptional = sendAndReceive(new PingMessage(), String.class);
         if(!stringOptional.isPresent()) {
-            return;
+            return false;
         }
 
         if(!getUuid().equals(stringOptional.get())) {
             notifyUnreachable();
+            return false;
         }
+
+        return true;
     }
 
     private void notifyUnreachable() {

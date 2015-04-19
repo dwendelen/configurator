@@ -1,13 +1,12 @@
-package be.cegeka.configurator.serverRegistery.impl;
+package be.cegeka.configurator.serverRegistery.impl.message;
 
 import be.cegeka.configurator.message.Message;
-import be.cegeka.configurator.server.Server;
-import be.cegeka.configurator.server.ServerInformation;
+import be.cegeka.configurator.serverRegistery.Server;
 import be.cegeka.configurator.serverRegistery.impl.Repository;
+import be.cegeka.configurator.serverRegistery.impl.ServerInformation;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 public class ServerInfoMessage implements Message {
     public static final String MESSAGE_TYPE = "serverInfo";

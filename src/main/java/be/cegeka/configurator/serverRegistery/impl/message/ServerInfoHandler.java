@@ -1,23 +1,23 @@
-package be.cegeka.configurator.serverRegistery.impl;
+package be.cegeka.configurator.serverRegistery.impl.message;
 
 import be.cegeka.configurator.messageProcessor.MessageHandler;
-import be.cegeka.configurator.server.Server;
-import be.cegeka.configurator.server.ServerFactory;
-import be.cegeka.configurator.server.ServerInformation;
+import be.cegeka.configurator.serverRegistery.Server;
+import be.cegeka.configurator.serverRegistery.impl.Repository;
+import be.cegeka.configurator.serverRegistery.impl.ServerFactory;
+import be.cegeka.configurator.serverRegistery.impl.ServerInformation;
+import be.cegeka.configurator.serverRegistery.impl.ServerListenerForRegistry;
 import be.cegeka.configurator.socket.Session;
 import com.google.common.base.Optional;
-
-import java.io.IOException;
 
 public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
     private Repository repository;
     private ServerFactory serverFactory;
-    private ServerListener serverListener;
+    private ServerListenerForRegistry serverListenerForRegistry;
 
-    public ServerInfoHandler(Repository repository, ServerFactory serverFactory, ServerListener serverListener) {
+    public ServerInfoHandler(Repository repository, ServerFactory serverFactory, ServerListenerForRegistry serverListenerForRegistry) {
         this.repository = repository;
         this.serverFactory = serverFactory;
-        this.serverListener = serverListener;
+        this.serverListenerForRegistry = serverListenerForRegistry;
     }
 
     @Override
@@ -67,7 +67,13 @@ public class ServerInfoHandler implements MessageHandler<ServerInfoMessage> {
 
     private void handleNewServer(ServerInformation serverInformation, ServerInfoMessage thisServerInfo) {
         Server newServer = serverFactory.createNewServer(serverInformation);
-        newServer.addServerListener(serverListener);
+        boolean success = newServer.ping();
+
+        if(!success) {
+            return;
+        }
+
+        newServer.addServerListener(serverListenerForRegistry);
         repository.addServer(newServer);
 
         newServer.send(thisServerInfo);

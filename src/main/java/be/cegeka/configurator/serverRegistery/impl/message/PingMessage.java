@@ -1,4 +1,4 @@
-package be.cegeka.configurator.serverRegistery.impl;
+package be.cegeka.configurator.serverRegistery.impl.message;
 
 import be.cegeka.configurator.message.Message;
 

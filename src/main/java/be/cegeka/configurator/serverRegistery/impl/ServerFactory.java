@@ -1,7 +1,7 @@
-package be.cegeka.configurator.server;
+package be.cegeka.configurator.serverRegistery.impl;
 
 import be.cegeka.configurator.message.MessageSender;
-import be.cegeka.configurator.server.impl.SimpleServer;
+import be.cegeka.configurator.serverRegistery.Server;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

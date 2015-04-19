@@ -1,9 +1,7 @@
 package be.cegeka.configurator.serverRegistery.impl;
 
 import be.cegeka.configurator.message.Message;
-import be.cegeka.configurator.server.Server;
-
-import java.io.IOException;
+import be.cegeka.configurator.serverRegistery.Server;
 
 public class Broadcaster {
     private Repository repository;

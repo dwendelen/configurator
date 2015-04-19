@@ -1,6 +1,6 @@
 package be.cegeka.configurator.serverRegistery.impl;
 
-import be.cegeka.configurator.server.Server;
+import be.cegeka.configurator.serverRegistery.Server;
 import com.google.common.base.Optional;
 
 import java.util.*;

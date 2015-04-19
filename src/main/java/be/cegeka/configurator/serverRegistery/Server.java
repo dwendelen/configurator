@@ -1,10 +1,6 @@
-package be.cegeka.configurator.server;
+package be.cegeka.configurator.serverRegistery;
 
 import be.cegeka.configurator.message.Message;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.UUID;
 
 public interface Server {
     String getUuid();
@@ -13,5 +9,5 @@ public interface Server {
     String getInetAddress();
     void send(Message message);
     void addServerListener(ServerListener serverListener);
-    void ping();
+    boolean ping();
 }

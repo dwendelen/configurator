@@ -1,11 +1,12 @@
 package be.cegeka.configurator.serverRegistery.impl;
 
-import be.cegeka.configurator.server.Server;
+import be.cegeka.configurator.serverRegistery.Server;
+import be.cegeka.configurator.serverRegistery.impl.message.UnreachableMessage;
 
-public class ServerListener implements be.cegeka.configurator.server.ServerListener {
+public class ServerListenerForRegistry implements be.cegeka.configurator.serverRegistery.ServerListener {
     private Repository repository;
 
-    public ServerListener(Repository repository) {
+    public ServerListenerForRegistry(Repository repository) {
         this.repository = repository;
     }
 

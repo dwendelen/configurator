@@ -1,11 +1,10 @@
-package be.cegeka.configurator.serverRegistery.impl;
+package be.cegeka.configurator.serverRegistery.impl.message;
 
 import be.cegeka.configurator.messageProcessor.MessageHandler;
-import be.cegeka.configurator.server.Server;
+import be.cegeka.configurator.serverRegistery.Server;
+import be.cegeka.configurator.serverRegistery.impl.Repository;
 import be.cegeka.configurator.socket.Session;
 import com.google.common.base.Optional;
-
-import java.io.IOException;
 
 public class UnreachableHandler implements MessageHandler<UnreachableMessage> {
     private Repository repository;

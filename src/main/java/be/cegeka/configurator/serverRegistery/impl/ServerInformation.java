@@ -1,4 +1,4 @@
-package be.cegeka.configurator.server;
+package be.cegeka.configurator.serverRegistery.impl;
 
 public class ServerInformation {
     private String uuid;
