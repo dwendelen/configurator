@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public class Node {
     public static void main(String[] args) throws Exception {
+        System.out.println("Starting up");
         SocketFactory socketFactory = new SocketFactory();
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -18,10 +19,21 @@ public class Node {
         MessageProcessorFactory messageProcessorFactory = new MessageProcessorFactory(socketFactory, objectMapper);
         ServerRegisteryFactory serverRegisteryFactory = new ServerRegisteryFactory(messageSenderFactory, socketFactory, objectMapper);
 
-        MessageProcessor messageProcessor = messageProcessorFactory.create();
+        final MessageProcessor messageProcessor = messageProcessorFactory.create();
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                System.out.println("Shutting down");
+                messageProcessor.stop();
+            }
+        });
         messageProcessor.start();
 
         ServerRegistery serverRegistery = serverRegisteryFactory.create(messageProcessor);
         serverRegistery.start();
+
+        System.out.println("Started");
+
+
     }
 }
